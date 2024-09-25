@@ -1,0 +1,182 @@
+<mat-card-content>
+     <app-dynnamic-wizard [steps]="wizardSteps" (stepChange)="onStepChange($event)">
+
+    </app-dynnamic-wizard>
+    <!-- <ng-template #step1Content> -->
+        <mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block"
+        [class.rtl-enabled]="themeService.isRTLEnabled()"  >
+        <mat-card-content>
+            <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+                <mat-accordion>
+                    <!-- Employee Information Group -->
+                    <mat-expansion-panel [expanded]="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Employee Information</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row my-3">
+                            <div class="col-md-4 col-12 my-3">
+                                <mat-form-field>
+                                    <input matInput placeholder="Full Name" formControlName="fullName" />
+                                    <mat-error *ngIf="employeeForm.get('fullName')?.hasError('required')">
+                                        Full Name is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 col-12 my-3">
+                                <mat-form-field>
+                                    <input matInput placeholder="Email" formControlName="email" />
+                                    <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+                                        Email is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 col-12 my-3">
+                                <mat-form-field>
+                                    <input matInput placeholder="Phone" formControlName="phone" />
+                                    <mat-error *ngIf="employeeForm.get('phone')?.hasError('invalidPhoneNumber')">
+                                        Invalid phone number
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 col-12 my-3">
+                                <mat-form-field>
+                                    <input matInput placeholder="National ID" formControlName="nationalId" />
+                                    <mat-error *ngIf="employeeForm.get('nationalId')?.hasError('invalidNationalId')">
+                                        National ID must be 14 digits
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 col-12 my-3">
+                                <mat-form-field>
+                                    <input matInput placeholder="Hire Date" formControlName="hireDate"
+                                        [matDatepicker]="picker1" />
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                    <mat-error *ngIf="employeeForm.get('hireDate')?.hasError('required')">
+                                        Hire Date is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 col-12 my-3">
+                                <mat-form-field>
+                                    <input matInput placeholder="Birth Date" formControlName="birthDate"
+                                        [matDatepicker]="picker2" />
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                    <mat-error *ngIf="employeeForm.get('birthDate')?.hasError('required')">
+                                        Birth Date is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                    </mat-expansion-panel>
+
+                <!-- Bank Information Group -->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>Bank Information</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="row my-3">
+                        <div class="col-md-4 col-12 my-3">
+                            <mat-form-field>
+                                <input matInput placeholder="Bank Account" formControlName="bankAccount" />
+                                <!-- <mat-error *ngIf="employeeForm.get('bankAccount')?.hasError('invalidAccountNumber')">
+                                    Account number must be 12 digits
+                                </mat-error> -->
+                            </mat-form-field>
+
+                            </div>
+                            <div class="col-md-4 col-12 my-3">
+                                <mat-form-field>
+                                    <input matInput placeholder="Bank Name" formControlName="bankName" />
+                                    <mat-error *ngIf="employeeForm.get('bankName')?.hasError('required')">
+                                        Bank Name is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <!-- References Group -->
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>References</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row my-3">
+                            <div class="col-md-4 col-12 my-3" *ngFor="let ref of [1,2,3,4,5,6,7,8,9,10]">
+                                <mat-form-field class="my-3">
+                                    <input matInput [placeholder]="'Reference ' + ref"
+                                        [formControlName]="'refrence' + ref" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+
+                    <!-- Dropdown Options Group -->
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>Other Information</mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div class="row my-3">
+                            <div class="col-md-4 col-12 my-3"> <mat-form-field>
+                                    <mat-label>Department</mat-label>
+                                    <mat-select formControlName="departmentId">
+                                        <mat-option *ngFor="let dept of departments" [value]="dept.departmentId">
+                                            {{ dept.departmentName }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="employeeForm.get('departmentId')?.hasError('required')">
+                                        Department is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 col-12 my-3">
+                                <mat-form-field>
+                                    <mat-label>Title</mat-label>
+                                    <mat-select formControlName="titleId">
+                                        <mat-option *ngFor="let title of titles" [value]="title.titleId">
+                                            {{ title.titleName }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="employeeForm.get('titleId')?.hasError('required')">
+                                        Title is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-4 col-12 my-3">
+
+
+
+
+                                <mat-form-field>
+                                    <mat-label>Organization</mat-label>
+                                    <mat-select formControlName="orgId">
+                                        <mat-option *ngFor="let org of organizations" [value]="org.orgId">
+                                            {{ org.orgName }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="employeeForm.get('orgId')?.hasError('required')">
+                                        Organization is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <div class="btn-box my-3">
+                    <button mat-button type="submit">
+                        <span *ngIf="isLoading">Loading...</span>
+                        <span *ngIf="!isLoading && !editMode">Create Employee</span>
+                        <span *ngIf="!isLoading && editMode">Edit Employee</span>
+                    </button>
+                    <button mat-button routerLink="/ecommerce-page/order-list">Cancel</button>
+                    <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+                </div>
+            </form>
+        </mat-card-content>
+     </mat-card>
+    <!-- </ng-template> -->
+</mat-card-content>
+

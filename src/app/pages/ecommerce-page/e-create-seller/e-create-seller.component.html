@@ -1,0 +1,273 @@
+<mat-card
+    class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <form [formGroup]="OrganizationForm" (ngSubmit)="onSubmit()">
+            <div class="row align-items-center">
+                <!-- Organization Name -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Organization Name</mat-label>
+                        <input matInput formControlName="orgName" />
+                        <mat-error
+                            *ngIf="
+                                OrganizationForm.get('orgName')?.hasError(
+                                    'required'
+                                )
+                            "
+                        >
+                            Organization Name is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Organization Description -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Organization Description</mat-label>
+                        <input matInput formControlName="orgDescription" />
+                        <mat-error
+                            *ngIf="
+                                OrganizationForm.get(
+                                    'orgDescription'
+                                )?.hasError('required')
+                            "
+                        >
+                            Organization Description is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Employee ID Started From -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Employee ID Started From</mat-label>
+                        <input
+                            matInput
+                            formControlName="employeeIdstartedFrom"
+                            [matDatepicker]="picker3"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker3"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+                        <mat-error
+                            *ngIf="
+                                OrganizationForm.get(
+                                    'employeeIdstartedFrom'
+                                )?.hasError('required')
+                            "
+                        >
+                            Employee ID Started From is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Logo Upload -->
+                <div class="col-sm-6 my-3">
+                    <label for="logo" class="file-upload-label"
+                        >Upload Logo</label
+                    >
+                    <input
+                        type="file"
+                        id="logo"
+                        (change)="onFileChange($event)"
+                        accept="image/*"
+                    />
+                    <mat-error
+                        *ngIf="
+                            OrganizationForm.get('logo')?.invalid &&
+                            OrganizationForm.get('logo')?.touched
+                        "
+                    >
+                        Please upload a valid logo image.
+                    </mat-error>
+                </div>
+
+                <!-- Number of Licenses -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Number of Licenses</mat-label>
+                        <input matInput formControlName="nofLicense" />
+                        <mat-error
+                            *ngIf="
+                                OrganizationForm.get('nofLicense')?.hasError(
+                                    'required'
+                                )
+                            "
+                        >
+                            Number of Licenses is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Employee ID Last ID -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Employee ID Last ID</mat-label>
+                        <input matInput formControlName="employeeIdlastId" />
+                        <mat-error
+                            *ngIf="
+                                OrganizationForm.get(
+                                    'employeeIdlastId'
+                                )?.hasError('required')
+                            "
+                        >
+                            Employee ID Last ID is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Active Checkbox -->
+                <div class="col-sm-6 my-3 d-flex align-items-center">
+                    <mat-checkbox formControlName="active">Active</mat-checkbox>
+                </div>
+
+                <!-- Reference 1 -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Reference 1</mat-label>
+                        <input matInput formControlName="refrence1" />
+                        <mat-error
+                            *ngIf="
+                                OrganizationForm.get('refrence1')?.hasError(
+                                    'required'
+                                )
+                            "
+                        >
+                            Reference 1 is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Reference 2 -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Reference 2</mat-label>
+                        <input matInput formControlName="refrence2" />
+                        <mat-error
+                            *ngIf="
+                                OrganizationForm.get('refrence2')?.hasError(
+                                    'required'
+                                )
+                            "
+                        >
+                            Reference 2 is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Reference 3 -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Reference 3</mat-label>
+                        <input matInput formControlName="refrence3" />
+                    </mat-form-field>
+                </div>
+
+                <!-- Reference 4 -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Reference 4</mat-label>
+                        <input matInput formControlName="refrence4" />
+                    </mat-form-field>
+                </div>
+
+                <!-- Reference 5 -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Reference 5</mat-label>
+                        <input matInput formControlName="refrence5" />
+                    </mat-form-field>
+                </div>
+
+                <!-- License Start Date -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>License Start Date</mat-label>
+                        <input
+                            matInput
+                            formControlName="licenseStartDate"
+                            [matDatepicker]="picker1"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker1"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-error
+                            *ngIf="
+                                OrganizationForm.get(
+                                    'licenseStartDate'
+                                )?.hasError('required')
+                            "
+                        >
+                            License Start Date is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- License End Date -->
+                <div class="col-sm-6 my-3">
+                    <mat-form-field appearance="fill">
+                        <mat-label>License End Date</mat-label>
+                        <input
+                            matInput
+                            formControlName="licenseEndDate"
+                            [matDatepicker]="picker2"
+                        />
+                        <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker2"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error
+                            *ngIf="
+                                OrganizationForm.get(
+                                    'licenseEndDate'
+                                )?.hasError('required')
+                            "
+                        >
+                            License End Date is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="btn-box">
+                <button
+                    mat-button
+                    color="primary"
+                    [disabled]="isLoading || OrganizationForm.invalid"
+                    type="submit"
+                >
+                    <!-- Show loading indicator when loading -->
+                    <ng-container *ngIf="isLoading; else notLoading">
+                        <span>Loading...</span>
+                    </ng-container>
+                    <ng-template #notLoading>
+                        <span *ngIf="!editMode; else editModeContent"
+                            >Create Organization</span
+                        >
+                    </ng-template>
+                    <ng-template #editModeContent>
+                        <span>Edit Organization</span>
+                    </ng-template>
+                </button>
+                <button
+                    mat-button
+                    routerLink="/ecommerce-page/sellers"
+                    type="button"
+                >
+                    Cancel
+                </button>
+            </div>
+
+            <!-- Display Global Error Message -->
+            <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+        </form>
+    </mat-card-content>
+</mat-card>

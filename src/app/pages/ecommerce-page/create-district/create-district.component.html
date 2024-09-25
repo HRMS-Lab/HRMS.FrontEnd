@@ -1,0 +1,346 @@
+<!-- Breadcrumb -->
+<div
+    class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between"
+>
+    <h5 class="mb-0">Create Department</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">E-Commerce</li>
+        <li class="breadcrumb-item position-relative">Create District</li>
+    </ol>
+</div>
+
+<!-- Create Region -->
+<mat-card
+    class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <form [formGroup]="DistrictForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h5 class="title mt-0">Add a District</h5>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >District Name</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>District Name</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Enter district Name"
+                                        formControlName="districtName"
+                                    />
+                                    @if(DistrictForm.get('districtName')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >district Description</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>district Description</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="E.g.district Description"
+                                        formControlName="districtDescription"
+                                    />
+                                    @if(DistrictForm.get('districtDescription')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- Region Dropdown -->
+                        <div class="col-md-6 col-12">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Region</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Region</mat-label>
+                                    <mat-select
+                                        placeholder="Select Region"
+                                        formControlName="regionId"
+                                    >
+                                        <mat-option
+                                            *ngFor="let region of regions"
+                                            [value]="region.regionId"
+                                        >
+                                            {{ region.regionName }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="
+                                            DistrictForm?.get(
+                                                'regionId'
+                                            )?.hasError('required')
+                                        "
+                                    >
+                                        This field is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 1</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 1</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 1"
+                                        formControlName="refrence1"
+                                    />
+                                    @if(DistrictForm.get('refrence1')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 2</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 2</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 2"
+                                        formControlName="refrence2"
+                                    />
+                                    @if(DistrictForm.get('refrence2')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 3</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 3</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 3"
+                                        formControlName="refrence3"
+                                    />
+                                    @if(DistrictForm.get('refrence3')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 4</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 4</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 4"
+                                        formControlName="refrence4"
+                                    />
+                                    @if(DistrictForm.get('refrence4')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 5</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 5</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 5"
+                                        formControlName="refrence5"
+                                    />
+                                    @if(DistrictForm.get('refrence5')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <mat-checkbox formControlName="active"
+                                    >Active</mat-checkbox
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Latitude -->
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Latitude</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Latitude</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Enter Latitude"
+                                        formControlName="lat"
+                                    />
+                                    <mat-error
+                                        *ngIf="
+                                            DistrictForm.get('lat')?.hasError(
+                                                'required'
+                                            )
+                                        "
+                                        >This field is required</mat-error
+                                    >
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <!-- Longitude -->
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Longitude</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Longitude</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Enter Longitude"
+                                        formControlName="long"
+                                    />
+                                    <mat-error
+                                        *ngIf="
+                                            DistrictForm.get('long')?.hasError(
+                                                'required'
+                                            )
+                                        "
+                                        >This field is required</mat-error
+                                    >
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <!-- Date Created (read-only field) -->
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Date Created</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Date Created</mat-label>
+
+                                    <input
+                                        matInput
+                                        formControlName="dateCreated"
+                                        [matDatepicker]="picker3"
+                                    />
+                                    <mat-datepicker-toggle
+                                        matSuffix
+                                        [for]="picker3"
+                                    ></mat-datepicker-toggle>
+                                    <mat-datepicker #picker3></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <!-- Last Updated (read-only field) -->
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Last Updated</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Last Updated</mat-label>
+
+                                    <input
+                                        matInput
+                                        formControlName="dateUpdated"
+                                        [matDatepicker]="picker2"
+                                    />
+                                    <mat-datepicker-toggle
+                                        matSuffix
+                                        [for]="picker2"
+                                    ></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box">
+                <button
+                    mat-button
+                    [disabled]="isLoading || DistrictForm.invalid"
+                    type="submit"
+                >
+                    <!-- Show loading indicator when loading -->
+                    @if(isLoading){
+                    <span>Loading...</span>
+
+                    } @if(!isLoading && !editMode){
+                    <span>Create District</span>
+                    } @if(!isLoading && editMode){
+                    <span>Edit District</span>
+                    }
+                </button>
+
+                <button mat-button routerLink="'/ecommerce-page/sellers'">
+                    Cancel
+                </button>
+
+                <!-- Display error message if any -->
+                @if(errorMessage){
+                <mat-error>{{ errorMessage }}</mat-error>
+                }
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

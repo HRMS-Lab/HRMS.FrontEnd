@@ -1,0 +1,243 @@
+<!-- Breadcrumb -->
+<div
+    class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between"
+>
+    <h5 class="mb-0">Create Department</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">E-Commerce</li>
+        <li class="breadcrumb-item position-relative">Create Department</li>
+    </ol>
+</div>
+
+<!-- Create Department -->
+<mat-card
+    class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h5 class="title mt-0">Add a Department</h5>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Department Name</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Department Name</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="E.g.Department Name"
+                                        formControlName="departmentName"
+                                    />
+                                    @if(departmentName?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Department Description</label
+                                >
+                                <mat-form-field>
+                                    <mat-label
+                                        >Department Description</mat-label
+                                    >
+                                    <input
+                                        matInput
+                                        placeholder="E.g.Department Description"
+                                        formControlName="departmentDescription"
+                                    />
+                                    @if(departmentDescription?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- Organization Selection -->
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Organization</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Select Organization</mat-label>
+                                    <mat-select formControlName="orgId">
+                                        @for (org of organizations; track org) {
+                                        <mat-option [value]="org.orgId">
+                                            {{ org.orgName }}
+                                        </mat-option>
+                                        }
+                                    </mat-select>
+                                    @if(departmentForm.get('organization')?.hasError('required')){
+                                    <mat-error>
+                                        This field is required
+                                    </mat-error>
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 1</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 1</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 1"
+                                        formControlName="refrence1"
+                                    />
+                                    @if(refrence1?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 2</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 2</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 2"
+                                        formControlName="refrence2"
+                                    />
+                                    @if(refrence2?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 3</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 3</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 3"
+                                        formControlName="refrence3"
+                                    />
+                                    @if(refrence3?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 4</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 4</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 4"
+                                        formControlName="refrence4"
+                                    />
+                                    @if(refrence4?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 5</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 5</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 5"
+                                        formControlName="refrence5"
+                                    />
+                                    @if(refrence5?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <mat-checkbox formControlName="active"
+                                    >Active</mat-checkbox
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <!-- Additional fields and sections -->
+                </div>
+            </div>
+            <div class="btn-box">
+                <button
+                    mat-button
+                    [disabled]="isLoading || departmentForm.invalid"
+                    type="submit"
+                >
+                    <!-- Show loading indicator when loading -->
+                    @if(isLoading){
+                    <span>Loading...</span>
+
+                    } @if(!isLoading && !editMode){
+                    <span>Create Department</span>
+                    } @if(!isLoading && editMode){
+                    <span>Edit Department</span>
+                    }
+                </button>
+
+                <button mat-button routerLink="'/ecommerce-page/products-list'">
+                    Cancel
+                </button>
+
+                <!-- Display error message if any -->
+                @if(errorMessage){
+                <mat-error>{{ errorMessage }}</mat-error>
+                }
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

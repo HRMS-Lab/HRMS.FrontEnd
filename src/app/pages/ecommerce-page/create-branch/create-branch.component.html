@@ -1,0 +1,250 @@
+<!-- Breadcrumb -->
+<div
+    class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between"
+>
+    <h5 class="mb-0">Create Branch</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">E-Commerce</li>
+        <li class="breadcrumb-item position-relative">Create Branch</li>
+    </ol>
+</div>
+
+<!-- Existing code for breadcrumb and card -->
+
+<!-- Create Branch -->
+<mat-card
+    class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-content>
+        <form [formGroup]="branchForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h5 class="title mt-0">Add a Branch</h5>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Beanch Name</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Beanch Name</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="E.g.Name"
+                                        formControlName="branchName"
+                                    />
+                                    <mat-error
+                                        *ngIf="
+                                            branchForm
+                                                .get('branchName')
+                                                ?.hasError('required')
+                                        "
+                                        >This field is required</mat-error
+                                    >
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- District Selection -->
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >District</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Select District</mat-label>
+                                    <mat-select formControlName="districtId">
+                                        <mat-option
+                                            *ngFor="let district of districts"
+                                            [value]="district.districtId"
+                                        >
+                                            {{ district.districtName }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="
+                                            branchForm
+                                                .get('districtId')
+                                                ?.hasError('required')
+                                        "
+                                        >This field is required</mat-error
+                                    >
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- Latitude -->
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Latitude</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Latitude</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="E.g. 12.3456"
+                                        formControlName="lat"
+                                    />
+                                    <mat-error
+                                        *ngIf="
+                                            branchForm
+                                                .get('lat')
+                                                ?.hasError('required')
+                                        "
+                                        >This field is required</mat-error
+                                    >
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- Longitude -->
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Longitude</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Longitude</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="E.g. 65.4321"
+                                        formControlName="long"
+                                    />
+                                    <mat-error
+                                        *ngIf="
+                                            branchForm
+                                                .get('long')
+                                                ?.hasError('required')
+                                        "
+                                        >This field is required</mat-error
+                                    >
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- Existing fields for Reference 1, 2, 3, 4 -->
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 1</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 1</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 1"
+                                        formControlName="refrence1"
+                                    />
+                                    @if(branchForm.get('refrence1')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 2</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 2</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 2"
+                                        formControlName="refrence2"
+                                    />
+                                    @if(branchForm.get('refrence2')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 3</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 3</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 3"
+                                        formControlName="refrence3"
+                                    />
+                                    @if(branchForm.get('refrence3')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <label
+                                    class="main-label d-block lh-1 text-black"
+                                    >Reference 4</label
+                                >
+                                <mat-form-field>
+                                    <mat-label>Reference 4</mat-label>
+                                    <input
+                                        matInput
+                                        placeholder="Reference 4"
+                                        formControlName="refrence4"
+                                    />
+                                    @if(branchForm.get('refrence4')?.hasError('required')){
+                                    <mat-error
+                                        >This field is required</mat-error
+                                    >
+                                    }
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- Additional reference fields... -->
+                        <!-- Active checkbox -->
+                        <div class="col-sm-6">
+                            <div class="mb-25">
+                                <mat-checkbox formControlName="active"
+                                    >Active</mat-checkbox
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <!-- Additional fields and sections -->
+                </div>
+            </div>
+            <div class="btn-box">
+                <button
+                    mat-button
+                    [disabled]="isLoading || branchForm.invalid"
+                    type="submit"
+                >
+                    <span *ngIf="isLoading">Loading...</span>
+                    <span *ngIf="!isLoading && !editMode">Create Branch</span>
+                    <span *ngIf="!isLoading && editMode">Edit Branch</span>
+                </button>
+                <button mat-button routerLink="'/ecommerce-page/products-list'">
+                    Cancel
+                </button>
+                <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

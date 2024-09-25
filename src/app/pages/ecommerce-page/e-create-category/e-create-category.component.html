@@ -1,0 +1,158 @@
+<!-- Breadcrumb -->
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Create Attachment</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="ri-home-8-line"></i>
+                Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">E-Commerce</li>
+        <li class="breadcrumb-item position-relative">Create Attachment</li>
+    </ol>
+</div>
+
+<!-- Create Attachment -->
+<mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
+    <mat-card-content>
+        <form [formGroup]="attechmentForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-sm-6 my-3">
+                    <div class="mat-form-field">
+                        <label for="attachments">Attachments</label>
+                        <input type="file" id="attachments" (change)="onFileChange($event)" multiple />
+                    </div>
+                </div>
+                
+
+                <div class="col-sm-6 my-3">
+                    <mat-form-field>
+                        <mat-label>AttechmentType</mat-label>
+                        <mat-select formControlName="attachTypeID">
+                            <mat-option *ngFor="let org of attechmentsTypes" [value]="org.attachId">
+                                {{ org.attachName }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="attechmentForm.get('attachTypeID')?.hasError('required')">
+                            AttechmentType is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-6 my-3">
+                    <mat-form-field>
+                        <mat-label>Employee</mat-label>
+                        <mat-select formControlName="employeeId">
+                            <mat-option *ngFor="let org of employees" [value]="org.employeeId">
+                                {{ org.fullName }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="attechmentForm.get('employeeId')?.hasError('required')">
+                            Employee is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-6 my-3">
+                    <mat-checkbox formControlName="active">Active</mat-checkbox>
+                </div>
+
+                <div class="col-sm-6 my-3">
+                    <mat-form-field>
+                        <mat-label>Reference 1</mat-label>
+                        <input matInput formControlName="refrence1" />
+                        <mat-error *ngIf="attechmentForm.get('refrence1')?.hasError('required')">This field is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+
+
+                <div class="col-sm-6 my-3">
+                    <mat-form-field>
+                        <mat-label>Reference 2</mat-label>
+                        <input matInput formControlName="refrence2" />
+                        <mat-error *ngIf="attechmentForm.get('refrence2')?.hasError('required')">This field is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-6 my-3">
+                    <mat-form-field>
+                        <mat-label>Reference 3</mat-label>
+                        <input matInput formControlName="refrence3" />
+                        <mat-error *ngIf="attechmentForm.get('refrence3')?.hasError('required')">This field is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-6 my-3">
+                    <mat-form-field>
+                        <mat-label>Reference 4</mat-label>
+                        <input matInput formControlName="refrence4" />
+                        <mat-error *ngIf="attechmentForm.get('refrence4')?.hasError('required')">This field is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-6 my-3">
+                    <mat-form-field>
+                        <mat-label>Reference 5</mat-label>
+                        <input matInput formControlName="refrence5" />
+                        <mat-error *ngIf="attechmentForm.get('refrence5')?.hasError('required')">This field is
+                            required</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- Similarly for refrence2 to refrence5 -->
+
+                <div class="col-sm-6 my-3">
+                    <mat-form-field>
+                        <input matInput placeholder="Date Created" formControlName="dateCreated"
+                            [matDatepicker]="picker1" />
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-6 my-3">
+
+                    <mat-form-field>
+                        <input matInput placeholder="Date Last" formControlName="lastUpdated"
+                            [matDatepicker]="picke2" />
+                        <mat-datepicker-toggle matSuffix [for]="picke2"></mat-datepicker-toggle>
+                        <mat-datepicker #picke2></mat-datepicker>
+
+                    </mat-form-field>
+                </div>
+            </div>
+  <div class="btn-box">
+    <button
+    mat-button
+    [disabled]="isLoading || attechmentForm.invalid"
+    type="submit"
+>
+    <!-- Show loading indicator when loading -->
+    @if(isLoading){
+    <span>Loading...</span>
+
+    } @if(!isLoading && !editMode){
+    <span>Create Attachment</span>
+    } @if(!isLoading && editMode){
+    <span>Edit Attachment</span>
+    }
+</button>
+
+<button mat-button routerLink="/ecommerce-page/categories">
+    Cancel
+</button>
+
+    <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+</div>
+            
+        </form>
+
+    </mat-card-content>
+</mat-card>
