@@ -148,7 +148,7 @@ export class CreateDistrictComponent {
                 [Validators.required],
             ],
             districtDescription: [
-                this.Districts?.districtDesciption ?? '',
+                this.Districts?.districtDescription ?? '',
                 [Validators.required],
             ],
             refrence1: [this.Districts?.refrence1 ?? '', [Validators.required]],

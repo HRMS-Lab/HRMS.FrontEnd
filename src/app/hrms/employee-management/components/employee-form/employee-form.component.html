@@ -1,0 +1,256 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">
+        {{(!editMode)?'Create':'Update'}} Employee
+        <span *ngIf="!editMode && employeeCounts != undefined" class="badge rounded-pill text-soft-dark"
+            style="margin-left: 5px;">
+            {{ employeeCounts.employeeIDLastId}}
+        </span>
+    </h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="material-symbols-outlined">
+                    group
+                </i>
+                Employee Management
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Employees</li>
+        <li class="breadcrumb-item position-relative">{{(!editMode)?'Create':'Update'}} Employee</li>
+    </ol>
+</div>
+
+<mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
+    <mat-card-content>
+        <mat-stepper #stepper>
+            <!-- Create Employye -->
+            <mat-step label="Employee Details" state="createEmployee">
+                <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+                    <mat-card-content>
+                        <mat-accordion>
+                            <!-- Employee Information Group -->
+                            <mat-expansion-panel [expanded]="true">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>Employee Information</mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row my-3">
+                                    <div class="col-md-4 col-12 my-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Full Name" formControlName="fullName"
+                                                required />
+                                            <mat-error *ngIf="employeeForm.get('fullName')?.hasError('required')">
+                                                Full Name is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4 col-12 my-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Email" formControlName="email" required />
+                                            <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+                                                Email is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4 col-12 my-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Phone" formControlName="phone" required />
+                                            <mat-error
+                                                *ngIf="employeeForm.get('phone')?.hasError('invalidPhoneNumber')">
+                                                Invalid phone number
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4 col-12 my-3"> 
+                                        <mat-form-field>
+                                            <mat-label>Gender</mat-label>
+                                            <mat-select formControlName="gender" required>
+                                                <mat-option *ngFor="let gender of genderList"
+                                                    [value]="gender.id">
+                                                    {{ gender.name }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="employeeForm.get('gender')?.hasError('required')">
+                                                gender is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4 col-12 my-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="National ID" formControlName="nationalId"
+                                                required />
+                                            <mat-error
+                                                *ngIf="employeeForm.get('nationalId')?.hasError('invalidNationalId')">
+                                                National ID must be 14 digits
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4 col-12 my-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Hire Date" formControlName="hireDate"
+                                                [matDatepicker]="picker1" [max]="today" required />
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                            <mat-error *ngIf="employeeForm.get('hireDate')?.hasError('required')">
+                                                Hire Date is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4 col-12 my-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Birth Date" formControlName="birthDate"
+                                                [matDatepicker]="picker2" required />
+                                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker2></mat-datepicker>
+                                            <mat-error *ngIf="employeeForm.get('birthDate')?.hasError('required')">
+                                                Birth Date is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                </div>
+                            </mat-expansion-panel>
+
+                            <!-- Bank Information Group -->
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>Bank Information</mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row my-3">
+                                    <div class="col-md-4 col-12 my-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Bank Account" formControlName="bankAccount"
+                                                required />
+                                            <!-- <mat-error *ngIf="employeeForm.get('bankAccount')?.hasError('invalidAccountNumber')">
+                                       Account number must be 12 digits
+                                   </mat-error> -->
+                                        </mat-form-field>
+
+                                    </div>
+                                    <div class="col-md-4 col-12 my-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Bank Name" formControlName="bankName"
+                                                required />
+                                            <mat-error *ngIf="employeeForm.get('bankName')?.hasError('required')">
+                                                Bank Name is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+
+                            <!-- References Group -->
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>References</mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row my-3">
+                                    <div class="col-md-4 col-12 my-3" *ngFor="let ref of [1,2,3,4,5,6,7,8,9,10]">
+                                        <mat-form-field class="my-3">
+                                            <input matInput [placeholder]="'Reference ' + ref"
+                                                [formControlName]="'refrence' + ref" />
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+
+                            <!-- Dropdown Options Group -->
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>Other Information</mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="row my-3">
+                                    <div class="col-md-4 col-12 my-3"> <mat-form-field>
+                                            <mat-label>Department</mat-label>
+                                            <mat-select formControlName="departmentId" required>
+                                                <mat-option *ngFor="let dept of departments"
+                                                    [value]="dept.departmentId">
+                                                    {{ dept.departmentName }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="employeeForm.get('departmentId')?.hasError('required')">
+                                                Department is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4 col-12 my-3">
+                                        <mat-form-field>
+                                            <mat-label>Title</mat-label>
+                                            <mat-select formControlName="titleId" required>
+                                                <mat-option *ngFor="let title of titles" [value]="title.titleId">
+                                                    {{ title.titleName }}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="employeeForm.get('titleId')?.hasError('required')">
+                                                Title is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <!-- <div class="col-md-4 col-12 my-3">
+                                            <mat-form-field>
+                                        <mat-label>Organization</mat-label>
+                                        <mat-select formControlName="orgId">
+                                            <mat-option *ngFor="let org of organizations" [value]="org.orgId">
+                                                {{ org.orgName }}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="employeeForm.get('orgId')?.hasError('required')">
+                                            Organization is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                        </div> -->
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                        <div class="btn-box my-3" style="margin-top: 16px;">
+                            <button type="button" mat-flat-button class="daxa" type="submit"
+                                [disabled]="employeeForm.invalid" *ngIf="editMode">Update
+                                Employee</button>
+                            <div *ngIf="!editMode">
+                                <button type="button" mat-flat-button class="daxa" type="submit"
+                                    [disabled]="employeeId || employeeForm.invalid">Create
+                                    Employee</button>
+                                <span class="space-button"></span>
+                                <button mat-button mat-flat-button matStepperNext color="primary" *ngIf="employeeId"
+                                    type="button">Next</button>
+                            </div>
+
+                            <!-- <button mat-button matStepperNext *ngIf="employeeId">Next</button> -->
+                            <!-- <button mat-button mat-flat-button class="daxa" type="submit">
+                                    <span *ngIf="isLoading">Loading...</span>
+                                    <span *ngIf="!isLoading && !editMode">Create Employee</span>
+                                    <span *ngIf="!isLoading && editMode">Edit Employee</span>
+                                </button>
+                                <span class="space-button"></span>
+                                <button mat-button mat-flat-button color="warn"
+                                    routerLink="/employee-management/employees">Cancel</button> -->
+                            <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+                        </div>
+                    </mat-card-content>
+                </form>
+            </mat-step>
+
+            <!-- Attachment -->
+            <mat-step label="Attachment" state="attachment" *ngIf="!editMode">
+                <app-attachment *ngIf="employeeId" [createEmployeeForm]="true" [employeeFormId]="employeeId"
+                    (formEmployeeNext)="nextStep(stepper)" (formEmployeePrevious)="previousStep(stepper)">
+                </app-attachment>
+            </mat-step>
+
+            <!-- Address -->
+            <mat-step label="Address" *ngIf="!editMode">
+                <app-address *ngIf="employeeId" [createEmployeeForm]="true" [employeeFormId]="employeeId"
+                    (formEmployeeNext)="nextStep(stepper)" (formEmployeePrevious)="previousStep(stepper)">
+                </app-address>
+            </mat-step>
+
+            <!-- Project -->
+            <mat-step label="Project" *ngIf="!editMode">
+                <app-project *ngIf="employeeId" [createEmployeeForm]="true" [employeeFormId]="employeeId"
+                    (formEmployeeFinish)="finishStep()" (formEmployeePrevious)="previousStep(stepper)">
+                </app-project>
+            </mat-step>
+        </mat-stepper>
+    </mat-card-content>
+</mat-card>

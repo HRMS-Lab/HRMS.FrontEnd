@@ -1,0 +1,50 @@
+.bg-primary-transparent {
+    background-color: rgba(74, 50, 212, 0.2);
+}
+.text-primary {
+    color: #705ec8 !important;
+}
+.border-primary {
+    border-color: #705ec8 !important;
+}
+.fs-35 {
+    font-size: 35px !important;
+}
+.dash1-iocns {
+    padding: 14px 14px;
+    border-radius: 50px;
+    border: 2px dotted;
+}
+.bg-success-transparent {
+    background-color: rgba(56, 203, 137, 0.2) !important;
+}
+.text-success {
+    color: #38cb89 !important;
+}
+.border-success {
+    border-color: #38cb89 !important;
+}
+.bg-danger-transparent {
+    background-color: rgba(247, 45, 102, 0.2);
+}
+.text-danger {
+    color: #f72d66 !important;
+}
+.border-danger {
+    border-color: #f72d66 !important;
+}
+.text-wrap{
+    text-wrap: wrap !important;
+}
+.apexcharts-xaxis-label {
+    white-space: normal !important;
+    word-wrap: break-word;
+    max-width: 100px;
+  }
+  ::ng-deep{
+    .apexcharts-xaxis-label {
+        white-space: normal !important;
+        word-wrap: break-word;
+        max-width: 100px;
+      }
+  }

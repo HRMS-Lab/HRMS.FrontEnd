@@ -1,0 +1,150 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Payroll Calculation</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="material-symbols-outlined">
+                    payments
+                </i>
+                Payroll
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Calculation</li>
+    </ol>
+</div>
+
+<mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-content>
+        <form [formGroup]="Form" (ngSubmit)="onSubmit()" #submitForm="ngForm">
+            <div class="row">
+                <!-- Description -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Description</label>
+                        <mat-form-field>
+                            <mat-label>Description</mat-label>
+                            <input matInput placeholder="Description" formControlName="description" required />
+                        </mat-form-field>
+                        <mat-error *ngIf="Form?.get('description')?.hasError('required') && submitted">
+                            This field is required
+                        </mat-error>
+                    </div>
+                </div>
+
+                <!-- Month -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Month</label>
+                        <mat-form-field>
+                            <mat-label>Month</mat-label>
+                            <mat-select name="month" formControlName="month">
+                                <mat-option *ngFor="let item of months" [value]="item">
+                                    {{ item }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="Form?.get('month')?.hasError('required') && submitted">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Year -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Year</label>
+                        <mat-form-field>
+                            <mat-label>Year</mat-label>
+                            <mat-select name="year" formControlName="year">
+                                <mat-option *ngFor="let item of years" [value]="item">
+                                    {{ item }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="Form?.get('year')?.hasError('required') && submitted">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-3 btn-box">
+                <button mat-button mat-flat-button class="daxa" type="submit" [disabled]="Form.invalid">
+                    Calculate
+                </button>
+            </div>
+        </form>
+
+        <hr>
+
+        <div class="products-list-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <!-- Employee Name Column -->
+                    <ng-container matColumnDef="empName">
+                        <th mat-header-cell *matHeaderCellDef>Employee Name</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                {{ element?.fullName }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Gross Salary Column -->
+                    <ng-container matColumnDef="grossSalary">
+                        <th mat-header-cell *matHeaderCellDef>Gross Salary</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                {{ element?.grossSalary | number: '1.0' }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Total Earning Column -->
+                    <ng-container matColumnDef="totalEarning">
+                        <th mat-header-cell *matHeaderCellDef>Total Earning</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                {{ element?.totalEarning | number: '1.0' }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Total Deduction Column -->
+                    <ng-container matColumnDef="totalDeduction">
+                        <th mat-header-cell *matHeaderCellDef>Total Deduction</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                {{ element?.totalDeduction | number: '1.0' }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Net Salary Column -->
+                    <ng-container matColumnDef="netSalary">
+                        <th mat-header-cell *matHeaderCellDef>Net Salary</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                {{ element?.netSalary | number: '1.0' }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell text-center" colspan="5">
+                            No data matching the filter
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator #paginator [length]="count" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 30]"
+                showFirstLastButtons aria-label="Select page"></mat-paginator>
+        </div>
+
+    </mat-card-content>
+</mat-card>

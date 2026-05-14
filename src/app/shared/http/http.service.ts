@@ -33,6 +33,7 @@ export class HttpService {
    * @return {Observable<T>} An Observable of the response body.
    */
   get<T = unknown>(url: string, options?: HttpOptions): Observable<T> {
+    debugger;
     const mergedOptions = this._mergeDefaultOptions(options);
     if (mergedOptions.endWithSlash) {
       url = url.endsWith('/') ? url : url + '/';

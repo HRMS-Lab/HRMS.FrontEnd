@@ -58,9 +58,9 @@ export class EOrdersComponent {
 
     async loadEmployees(): Promise<void> {
         this._productService
-            .loadEmployees()
+            .loadEmployees(1, 10)
             .then((EmployeeInfo: any): any => {
-                this.employees = EmployeeInfo?.data;
+                this.employees = EmployeeInfo?.data?.items;
                 this.dataSource = new MatTableDataSource<EmployeeInfo>(
                     this.employees
                 ); // Corrected line

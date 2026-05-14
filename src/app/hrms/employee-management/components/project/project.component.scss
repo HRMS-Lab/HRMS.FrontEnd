@@ -1,0 +1,10 @@
+::ng-deep {
+    ul > li > .mat-mdc-menu-item-text {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.material-symbols-outlined {
+    margin-right: 12px;
+}

@@ -204,10 +204,167 @@ import { CreateDistrictComponent } from './pages/ecommerce-page/create-district/
 import { DistrictsComponent } from './pages/ecommerce-page/districts/districts.component';
 import { BranchDetailsComponent } from './pages/ecommerce-page/branch-details/branch-details.component';
 import { CreateBranchComponent } from './pages/ecommerce-page/create-branch/create-branch.component';
-import { BranchesComponent } from './pages/ecommerce-page/branches/branches.component';
+// import { BranchesComponent } from './pages/ecommerce-page/branches/branches.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { LookupComponent } from './lookup/lookup.component';
+import { RegionComponent } from './lookup/region/region.component';
+import { RegionFormComponent } from './lookup/region/region-form/region-form.component';
+import { RegionListComponent } from './lookup/region/region-list/region-list.component';
+import { DistrictListComponent } from './lookup/district/district-list/district-list.component';
+import { DistrictFormComponent } from './lookup/district/district-form/district-form.component';
+import { DistrictComponent } from './lookup/district/district.component';
+import { BranchesComponent } from './lookup/branches/branches.component';
+import { BranchesListComponent } from './lookup/branches/branches-list/branches-list.component';
+import { BranchFormComponent } from './lookup/branches/branch-form/branch-form.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AddressComponent } from './hrms/employee-management/components/address/address.component';
+import { AttachmentComponent } from './hrms/employee-management/components/attachment/attachment.component';
+import { DetailsComponent } from './hrms/employee-management/components/details/details.component';
+import { EmployeeFormComponent } from './hrms/employee-management/components/employee-form/employee-form.component';
+import { EmployeeListComponent } from './hrms/employee-management/components/employee-list/employee-list.component';
+import { EmployeeManagementComponent } from './hrms/employee-management/employee-management.component';
+import { ProjectComponent } from './hrms/employee-management/components/project/project.component';
+import { HrmsComponent } from './hrms/hrms.component';
+import { AuthGuard } from './core/auth/auth.guard';
+import { WorkforceManagementComponent } from './hrms/workforce-management/workforce-management.component';
+import { AdminProjectsComponent } from './hrms/workforce-management/components/admin-projects/admin-projects.component';
+import { AttendanceComponent } from './hrms/workforce-management/components/attendance/attendance.component';
+import { DisclaimerComponent } from './hrms/workforce-management/components/disclaimer/disclaimer.component';
+import { LockCalenderComponent } from './hrms/workforce-management/components/lock-calender/lock-calender.component';
+import { SecurityGroupComponent } from './hrms/admin/components/security-group/security-group.component';
+import { AdminComponent } from './hrms/admin/admin.component';
+import { SecurityRoleComponent } from './hrms/admin/components/security-role/security-role.component';
+import { RoleComponent } from './hrms/admin/components/role/role.component';
+import { UserComponent } from './hrms/admin/components/user/user.component';
+import { UserInterfaceComponent } from './hrms/admin/components/user-interface/user-interface.component';
+import { UserInterfaceRoleComponent } from './hrms/admin/components/user-interface-role/user-interface-role.component';
+import { PayrollComponent } from './hrms/payroll/payroll.component';
+import { EarningComponent } from './hrms/payroll/components/earning/earning.component';
+import { DeductionComponent } from './hrms/payroll/components/deduction/deduction.component';
+import { TemplatesComponent } from './hrms/payroll/components/templates/templates.component';
+import { TemplateFormComponent } from './hrms/payroll/components/template-form/template-form.component';
+import { ContractFormComponent } from './hrms/payroll/components/contract-form/contract-form.component';
+import { ContractsComponent } from './hrms/payroll/components/contracts/contracts.component';
+import { CalculationComponent } from './hrms/payroll/components/calculation/calculation.component';
+import { ConfigurationComponent } from './hrms/configuration/configuration.component';
+import { TitlesComponent } from './hrms/configuration/components/titles/titles.component';
+import { TitleFormComponent } from './hrms/configuration/components/title-form/title-form.component';
+import { EmployeesRegistryComponent } from './hrms/employee-management/components/employees-registry/employees-registry.component';
 
 export const routes: Routes = [
-    { path: '', component: EcommerceComponent },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    {
+        path: 'hrms',
+        component: HrmsComponent,
+        children: [
+            {
+                path: 'employee-management',
+                component: EmployeeManagementComponent,
+                children: [
+                    { path: '', component: EmployeeListComponent },
+                    { path: 'employees', component: EmployeeListComponent, canActivate: [AuthGuard], data: { screenId: 2 } },
+                    { path: 'employee-form', component: EmployeeFormComponent, canActivate: [AuthGuard], data: { screenId: 1 } },
+                    { path: 'employee-form/:id', component: EmployeeFormComponent, canActivate: [AuthGuard], data: { screenId: 1 } },
+                    { path: 'employees-registry', component: EmployeesRegistryComponent, canActivate: [AuthGuard], data: { screenId: 2 } },
+                    { path: 'details/:id', component: DetailsComponent, canActivate: [AuthGuard], data: { screenId: 2 } },
+                    { path: 'address/:id', component: AddressComponent, canActivate: [AuthGuard], data: { screenId: 2 } },
+                    { path: 'project/:id', component: ProjectComponent, canActivate: [AuthGuard], data: { screenId: 2 } },
+                    { path: 'attachment/:id', component: AttachmentComponent, canActivate: [AuthGuard], data: { screenId: 2 } },
+                ],
+            },
+            {
+                path: 'admin',
+                component: AdminComponent,
+                children: [
+                    { path: '', component: SecurityGroupComponent },
+                    { path: 'user', component: UserComponent, canActivate: [AuthGuard], data: { screenId: 14 } },
+                    { path: 'user-interface', component: UserInterfaceComponent, canActivate: [AuthGuard], data: { screenId: 15 } },
+                    { path: 'user-interface-role', component: UserInterfaceRoleComponent, canActivate: [AuthGuard], data: { screenId: 16 } },
+                    { path: 'role', component: RoleComponent, canActivate: [AuthGuard], data: { screenId: 17 } },
+                    { path: 'security-group', component: SecurityGroupComponent, canActivate: [AuthGuard], data: { screenId: 18 } },
+                    { path: 'security-role', component: SecurityRoleComponent, canActivate: [AuthGuard], data: { screenId: 19 } },
+                ],
+            },
+            {
+                path: 'workforce-management',
+                component: WorkforceManagementComponent,
+                children: [
+                    { path: '', component: AdminProjectsComponent },
+                    { path: 'admin-project', component: AdminProjectsComponent, canActivate: [AuthGuard], data: { screenId: 10 } },
+                    { path: 'attendance', component: AttendanceComponent, canActivate: [AuthGuard], data: { screenId: 11 } },
+                    { path: 'disclaimer', component: DisclaimerComponent, canActivate: [AuthGuard], data: { screenId: 12 } },
+                    { path: 'lock-calender', component: LockCalenderComponent, canActivate: [AuthGuard], data: { screenId: 13 } },
+                ],
+            },
+            {
+                path: 'payroll',
+                component: PayrollComponent,
+                children: [
+                    { path: '', component: TemplatesComponent },
+                    { path: 'earning', component: EarningComponent, canActivate: [AuthGuard], data: { screenId: 20 } },
+                    { path: 'deduction', component: DeductionComponent, canActivate: [AuthGuard], data: { screenId: 21 } },
+                    { path: 'templates', component: TemplatesComponent, canActivate: [AuthGuard], data: { screenId: 23 } },
+                    { path: 'template-form', component: TemplateFormComponent, canActivate: [AuthGuard], data: { screenId: 22 } },
+                    { path: 'contracts', component: ContractsComponent, canActivate: [AuthGuard], data: { screenId: 24 } },
+                    { path: 'contract-form', component: ContractFormComponent, canActivate: [AuthGuard], data: { screenId: 25 } },
+                    { path: 'calculation', component: CalculationComponent, canActivate: [AuthGuard], data: { screenId: 26 } },
+                ],
+            },
+            {
+                path: 'configuration',
+                component: ConfigurationComponent,
+                children: [
+                    { path: '', component: TitlesComponent },
+                    { path: 'titles', component: TitlesComponent, canActivate: [AuthGuard], data: { screenId: 4 } },
+                    { path: 'title-form', component: TitleFormComponent, canActivate: [AuthGuard], data: { screenId: 4 } },
+                    { path: 'title-form/:id', component: TitleFormComponent, canActivate: [AuthGuard], data: { screenId: 4 } },
+                ],
+            },
+        ],
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'lookup',
+        component: LookupComponent,
+        children: [
+            { path: '', component: RegionComponent },
+            {
+                path: 'region', component: RegionComponent,
+                children: [
+                    { path: '', component: RegionListComponent },
+                    { path: 'region-list', component: RegionListComponent, canActivate: [AuthGuard], data: { screenId: 7 } },
+                    { path: 'region-form', component: RegionFormComponent, canActivate: [AuthGuard], data: { screenId: 7 } },
+                    { path: 'region-form/:id', component: RegionFormComponent, canActivate: [AuthGuard], data: { screenId: 7 } },
+                ],
+            },
+            {
+                path: 'district', component: DistrictComponent,
+                children: [
+                    { path: '', component: DistrictListComponent },
+                    { path: 'district-list/:regId', component: DistrictListComponent, canActivate: [AuthGuard], data: { screenId: 8 } },
+                    { path: 'district-form/:regId', component: DistrictFormComponent, canActivate: [AuthGuard], data: { screenId: 8 } },
+                    { path: 'district-form/:regId/:id', component: DistrictFormComponent, canActivate: [AuthGuard], data: { screenId: 8 } },
+                ],
+            },
+            {
+                path: 'branches', component: BranchesComponent,
+                children: [
+                    { path: '', component: BranchesListComponent },
+                    { path: 'branches-list', component: BranchesListComponent, canActivate: [AuthGuard], data: { screenId: 9 } },
+                    { path: 'branch-form', component: BranchFormComponent, canActivate: [AuthGuard], data: { screenId: 9 } },
+                    { path: 'branch-form/:regId/:id', component: BranchFormComponent, canActivate: [AuthGuard], data: { screenId: 9 } },
+                ],
+            },
+        ],
+        canActivate: [AuthGuard]
+    },
+
+
+
+
+    { path: 'ecommerce', component: EcommerceComponent },
     { path: 'crm', component: CrmComponent },
     { path: 'project-management', component: ProjectManagementComponent },
     { path: 'lms', component: LmsComponent },

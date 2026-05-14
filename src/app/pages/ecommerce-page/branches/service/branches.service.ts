@@ -22,7 +22,7 @@ export class BranchesService {
     }
     loadBranchessById(orgId: number, id: number) {
         const req = this._http
-            .get<BranchesInfoDetails>(Endpoints.GETBRANCH + id + '/' + orgId)
+            .get<BranchesInfoDetails>(Endpoints.GETBRANCH + orgId + '/' + id)
             .pipe(take(1));
         return lastValueFrom(req);
     }

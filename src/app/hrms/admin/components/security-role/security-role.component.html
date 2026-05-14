@@ -1,0 +1,126 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Security Role</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="material-symbols-outlined">
+                    admin_panel_settings
+                </i>
+                Administration
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Security Role</li>
+    </ol>
+</div>
+<mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-content>
+        <form [formGroup]="SecurityRoleForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <!-- Security Group Dropdown -->
+                <div class="col-md-6 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Security Group</label>
+                        <mat-form-field>
+                            <mat-label>Security Group</mat-label>
+                            <mat-select placeholder="Select Security Group" formControlName="secGroupId" required>
+                                <mat-option *ngFor="let item of securityGroups" [value]="item.securityGroupId">
+                                    {{ item.securityGroupName }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="SecurityRoleForm?.get('secGroupId')?.hasError('required')">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Role Dropdown -->
+                <div class="col-md-6 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Role</label>
+                        <mat-form-field>
+                            <mat-label>Role</mat-label>
+                            <mat-select placeholder="Select Role" formControlName="roleId">
+                                <mat-option *ngFor="let item of roles" [value]="item.roleId">
+                                    {{ item.roleName }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="SecurityRoleForm?.get('roleId')?.hasError('required')">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-3 btn-box">
+                <button mat-button mat-flat-button class="daxa" type="submit" [disabled]="SecurityRoleForm.invalid">
+                    {{editMode ?'Update':'Create'}} Security Role
+                </button>
+
+                <!-- Error Message -->
+                <mat-error *ngIf="errorMsg">{{ errorMsg }}</mat-error>
+            </div>
+        </form>
+
+        <hr>
+
+        <div class="products-list-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+                    <!-- security Group Column -->
+                    <ng-container matColumnDef="securityGroupName">
+                        <th mat-header-cell *matHeaderCellDef>Security Group Name</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                {{ element?.securityGroupName }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- security Role Column -->
+                    <ng-container matColumnDef="securityRoleName">
+                        <th mat-header-cell *matHeaderCellDef>Role Name</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                {{ element?.roleName }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="action-info">
+                                <button mat-icon-button [matMenuTriggerFor]="menu"
+                                    aria-label="Example icon-button with a menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="passData(element)">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>Edit</span>
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">
+                            No data matching the filter
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator #paginator [length]="count" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 30]"
+                showFirstLastButtons aria-label="Select page"></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

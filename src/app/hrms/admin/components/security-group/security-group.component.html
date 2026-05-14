@@ -1,0 +1,109 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Security Group</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="material-symbols-outlined">
+                    admin_panel_settings
+                </i>
+                Administration
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Security Group</li>
+    </ol>
+</div>
+<mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-content>
+        <form [formGroup]="SecurityGroupForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <!-- Security group name -->
+                <div class="col-md-6 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Security group name</label>
+                        <mat-form-field>
+                            <mat-label>Security group name</mat-label>
+                            <input matInput placeholder="Security group name" formControlName="securityGroupName"
+                                required />
+                            <mat-error *ngIf="SecurityGroupForm?.get('securityGroupName')?.hasError('required')">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Active -->
+                <div class="col-md-6 col-12 align-content-center">
+                    <div class="mb-25">
+                        <mat-checkbox class="example-margin" formControlName="active">
+                            Active
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-3 btn-box">
+                <button mat-button mat-flat-button class="daxa" type="submit" [disabled]="SecurityGroupForm.invalid">
+                    Create security group
+                </button>
+                <!-- Error Message -->
+                <mat-error *ngIf="errorMsg">{{ errorMsg }}</mat-error>
+            </div>
+        </form>
+
+        <hr>
+
+        <div class="products-list-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+                    <!-- security Group Name Column -->
+                    <ng-container matColumnDef="securityGroupName">
+                        <th mat-header-cell *matHeaderCellDef>security Group Name</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                {{ element?.securityGroupName }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Active Column -->
+                    <ng-container matColumnDef="active">
+                        <th mat-header-cell *matHeaderCellDef>Active</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                <div class="info d-flex align-items-center">
+                                    <span class="badge rounded-pill text-soft-success"
+                                        *ngIf="element?.active">Active</span>
+                                    <span class="badge rounded-pill text-soft-danger"
+                                        *ngIf="!element?.active">Inactive</span>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [(ngModel)]="element.active"
+                                (change)="update(element)">
+                            </mat-slide-toggle>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">
+                            No data matching the filter
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator #paginator [length]="count" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 30]"
+                showFirstLastButtons aria-label="Select page"></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

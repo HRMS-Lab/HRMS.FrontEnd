@@ -1,0 +1,127 @@
+<div class="row">
+    <div class="col-md-4 col-12">
+        <mat-card class="daxa-card total-customers-card mb-25 border-radius bg-white border-none d-block">
+            <mat-card-content>
+                <div class="d-flex justify-content-between">
+                    <div class="title">
+                        <h5>
+                            Total Employees
+                        </h5>
+                        <div class="number fw-medium lh-1">
+                            {{employeeCounts!.totalEmployees | number: '1.0'}}
+                        </div>
+                    </div>
+                    <span class="text-primary fs-35 dash1-iocns bg-primary-transparent border-primary">
+                        <fa-icon [icon]="faUsers"></fa-icon>
+                    </span>
+                    <!-- <div class="icon text-center bg-info rounded-circle text-white position-relative"> -->
+                    <!-- <i class="material-symbols-outlined">
+                            diversity_2
+                        </i> -->
+                    <!-- </div> -->
+                </div>
+                <!-- <div class="info d-flex align-items-center justify-content-between">
+                    <span class="sub-title d-block text-body">
+                        Total visitors decreased by 1.25%
+                    </span>
+                    <span class="daxa-up-down-badge down position-relative">
+                        <i class="material-symbols-outlined">
+                            trending_down
+                        </i>
+                        1.25%
+                    </span>
+                </div> -->
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="col-md-4 col-12">
+        <mat-card class="daxa-card total-customers-card mb-25 border-radius bg-white border-none d-block">
+            <mat-card-content>
+                <div class="d-flex justify-content-between">
+                    <div class="title">
+                        <h5>
+                            Active Employees
+                        </h5>
+                        <div class="number fw-medium lh-1">
+                            {{employeeCounts!.activeEmployeeCount | number: '1.0'}}
+                        </div>
+                    </div>
+                    <span class="text-success fs-35 dash1-iocns bg-success-transparent border-success">
+                        <fa-icon [icon]="faUserCheck"></fa-icon>
+                    </span>
+                </div>
+                <!-- <div class="info d-flex align-items-center justify-content-between">
+                    <span class="sub-title d-block text-body">
+                        Total visitors decreased by 1.25%
+                    </span>
+                    <span class="daxa-up-down-badge down position-relative">
+                        <i class="material-symbols-outlined">
+                            trending_down
+                        </i>
+                        1.25%
+                    </span>
+                </div> -->
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="col-md-4 col-12">
+        <mat-card class="daxa-card total-customers-card mb-25 border-radius bg-white border-none d-block">
+            <mat-card-content>
+                <div class="d-flex justify-content-between">
+                    <div class="title">
+                        <h5>
+                            Inactive Employees
+                        </h5>
+                        <div class="number fw-medium lh-1">
+                            {{employeeCounts!.inActiveEmployeeCount | number: '1.0'}}
+                        </div>
+                    </div>
+                    <span class="text-danger fs-35 dash1-iocns bg-danger-transparent border-danger">
+                        <fa-icon [icon]="faUserXmark"></fa-icon>
+                    </span>
+                </div>
+                <!-- <div class="info d-flex align-items-center justify-content-between">
+                    <span class="sub-title d-block text-body">
+                        Total visitors decreased by 1.25%
+                    </span>
+                    <span class="daxa-up-down-badge down position-relative">
+                        <i class="material-symbols-outlined">
+                            trending_down
+                        </i>
+                        1.25%
+                    </span>
+                </div> -->
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <mat-card class="daxa-card mb-25 border-radius bg-white border-none d-block">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mb-0">
+                        Projects
+                    </h5>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <apx-chart
+                    [series]="chartOptions.series!"
+                    [chart]="chartOptions.chart!"
+                    [dataLabels]="chartOptions.dataLabels!"
+                    [plotOptions]="chartOptions.plotOptions!"
+                    [yaxis]="chartOptions.yaxis!"
+                    [xaxis]="chartOptions.xaxis!"
+                    [colors]="chartOptions.colors!"
+                    [grid]="chartOptions.grid!"
+                    [fill]="chartOptions.fill!"
+                    [title]="chartOptions.title!"
+                ></apx-chart>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

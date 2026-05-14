@@ -1,7 +1,7 @@
 export interface AdressesInfo {
     addressId: number;
     employeeId: number;
-    address1: string;
+    address: string;
     regionId: number;
     city: string;
     state: string;

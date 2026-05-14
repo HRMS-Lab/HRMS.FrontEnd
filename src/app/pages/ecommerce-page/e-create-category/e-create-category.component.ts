@@ -56,7 +56,7 @@ export class ECreateCategoryComponent {
     }
     async loadEmployees(): Promise<void> {
         this._employeeService
-            .loadEmployees()
+            .loadEmployees(1, 10)
             .then((EmployeeInfo: any): any => {
                 this.employees = EmployeeInfo?.data;
             })

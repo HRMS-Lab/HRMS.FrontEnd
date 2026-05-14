@@ -1,0 +1,19 @@
+::ng-deep {
+    .mat-mdc-standard-chip.mdc-evolution-chip--with-trailing-action .mdc-evolution-chip__action--trailing {
+        padding-right: 0px !important;
+    }
+
+    .mat-mdc-standard-chip.mdc-evolution-chip--with-trailing-action .mdc-evolution-chip__action--primary {
+        padding-left: 0px !important;
+    }
+    .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) .mdc-evolution-chip__action--primary::before{
+        border-color: white  !important;
+    }
+    .mdc-evolution-chip__action--primary:not(.mdc-evolution-chip__action--presentational):not(.mdc-ripple-upgraded):focus::before{
+        border-color: white  !important;
+    }
+}
+hr{
+    margin-block-start: 1.5em;
+    margin-block-end: 1.5em;
+}

@@ -3,9 +3,9 @@
     [class.right-sidebar]="themeService.isRightSidebar()" [class.hide-sidebar]="themeService.isHideSidebar()"
     [class.card-borderd-theme]="themeService.isCardBorder()" [class.rtl-enabled]="themeService.isRTLEnabled()">
     <div class="logo bg-white">
-        <a routerLink="/" class="d-flex align-items-center">
+        <a routerLink="/dashboard" class="d-flex align-items-center">
             <img src="images/logo-icon.svg" alt="logo-icon">
-            <span class="fw-semibold">Daxa</span>
+            <span class="fw-semibold">HRMS</span>
         </a>
     </div>
     <div (click)="toggle()" class="burger-menu" [ngClass]="{'active': isSidebarToggled}">
@@ -192,11 +192,33 @@
                     <span class="sub-title text-body">
                         PAGES
                     </span> -->
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+
+                    <mat-expansion-panel *ngFor="let item of menu" [expanded]="expandedMenu(item.componentName)">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 <i class="material-symbols-outlined">
-                                    shopping_cart
+                                    {{item.icon}}
+                                </i>
+                                <span class="title">
+                                    {{item.name}}
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item" *ngFor="let child of item.child">
+                                <a [routerLink]="child.routerUrl" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    {{child.name}}
+                                </a>
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+
+                    <!-- <mat-expansion-panel [expanded]="expandedMenu('Employee-Management')">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    group
                                 </i>
                                 <span class="title">
                                     Employee Management
@@ -204,22 +226,18 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <ul class="sidebar-sub-menu">
-
-
-
                             <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/orders" routerLinkActive="active"
+                                <a routerLink="/hrms/employee-management/employees" routerLinkActive="active"
                                     [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
                                     Employees
                                 </a>
                             </li>
-
                             <li class="sidemenu-item">
-                                <a routerLink="/ecommerce-page/create-order" routerLinkActive="active"
+                                <a routerLink="/hrms/employee-management/employee-form" routerLinkActive="active"
                                     [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
                                     Create Employee
                                 </a>
-                            </li>
+                            </li> -->
 
 
                             <!-- <li class="sidemenu-item">
@@ -290,8 +308,50 @@
                                     Refunds
                                 </a>
                             </li> -->
+                        <!-- </ul>
+                    </mat-expansion-panel> -->
+
+                    <!-- Workforce Management -->
+                    <!-- <mat-expansion-panel [expanded]="expandedMenu('Workforce-Management')"
+                        (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    business_center
+                                </i>
+                                <span class="title">
+                                    Workforce Management
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
+                            <li class="sidemenu-item">
+                                <a routerLink="/hrms/workforce-management/admin-project" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Admin Projects
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/hrms/workforce-management/attendance" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Attendance
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/hrms/workforce-management/disclaimer" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Disclaimer
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/hrms/workforce-management/lock-calender" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Lock Calender
+                                </a>
+                            </li>
                         </ul>
                     </mat-expansion-panel>
+
                     <mat-expansion-panel (opened)="panelOpenState = false" (closed)="panelOpenState = false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -304,15 +364,12 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
                         <ul class="sidebar-sub-menu">
-
-
                             <li class="sidemenu-item">
                                 <a routerLink="/ecommerce-page/customers" routerLinkActive="active"
                                     [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
                                     Titles
                                 </a>
                             </li>
-
                             <li class="sidemenu-item">
                                 <a routerLink="/crm-page/create-customer" routerLinkActive="active"
                                     [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
@@ -326,38 +383,48 @@
                                 </a>
                             </li>
                             <li class="sidemenu-item">
-                                <a
-                                    routerLink="/ecommerce-page/sellers"
-                                    routerLinkActive="active"
-                                    [routerLinkActiveOptions]="{ exact: true }"
-                                    class="sidemenu-link"
-                                >
+                                <a routerLink="/ecommerce-page/sellers" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{ exact: true }" class="sidemenu-link">
                                     Organizations
                                 </a>
                             </li>
                             <li class="sidemenu-item">
-                                <a
-                                    routerLink="/ecommerce-page/create-seller"
-                                    routerLinkActive="active"
-                                    [routerLinkActiveOptions]="{ exact: true }"
-                                    class="sidemenu-link"
-                                >
+                                <a routerLink="/ecommerce-page/create-seller" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{ exact: true }" class="sidemenu-link">
                                     Create Organizations
                                 </a>
                             </li>
+                        </ul>
+                    </mat-expansion-panel> -->
+
+                    <!-- Lookup -->
+                    <!-- <mat-expansion-panel (opened)="panelOpenState = false" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <i class="material-symbols-outlined">
+                                    app_registration
+                                </i>
+                                <span class="title">
+                                    Lookup
+                                </span>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul class="sidebar-sub-menu">
                             <li class="sidemenu-item">
-                                <a
-                                    routerLink="/ecommerce-page/branches"
-                                    routerLinkActive="active"
-                                    [routerLinkActiveOptions]="{ exact: true }"
-                                    class="sidemenu-link"
-                                >
+                                <a routerLink="/lookup/region" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
+                                    Regions
+                                </a>
+                            </li>
+                            <li class="sidemenu-item">
+                                <a routerLink="/lookup/branches" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}" class="sidemenu-link">
                                     Branches
                                 </a>
                             </li>
-
                         </ul>
-                    </mat-expansion-panel>
+                    </mat-expansion-panel> -->
+
                     <!-- <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
                         <mat-expansion-panel-header>
                             <mat-panel-title>

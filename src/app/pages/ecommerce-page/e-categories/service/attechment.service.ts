@@ -27,6 +27,12 @@ export class AttechmentService {
             .pipe(take(1));
         return lastValueFrom(req);
     }
+    loadAttachmemtsByEmployeeId(employeeId: number) {        
+        const req = this._http
+            .get<AttachmentInfoDetails>(Endpoints.GETATTECHMENTBYEMPOLYEE + employeeId)
+            .pipe(take(1));
+        return lastValueFrom(req);
+    }
     addAttachmemt(Attachmemt: FormData) {
         const req = this._http
             .post<AttachmentInfoPayload>(

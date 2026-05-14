@@ -1,0 +1,61 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Lock Calender</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="material-symbols-outlined">
+                    business_center
+                </i>
+                Workforce Management
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Lock Calender</li>
+    </ol>
+</div>
+<mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-content>
+        <div class="products-list-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+                    <!-- Year Column -->
+                    <ng-container matColumnDef="year">
+                        <th mat-header-cell *matHeaderCellDef>Year</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element?.year }}
+                        </td>
+                    </ng-container>
+
+                    <!-- Month Name Column -->
+                    <ng-container matColumnDef="monthName">
+                        <th mat-header-cell *matHeaderCellDef>Month Name</th>
+                        <td mat-cell *matCellDef="let element">
+                            {{ element?.monthName }}
+                        </td>
+                    </ng-container>
+
+                    <!-- Lock Column -->
+                    <ng-container matColumnDef="lock">
+                        <th mat-header-cell *matHeaderCellDef>Lock</th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-slide-toggle [(ngModel)]="element.lock"
+                                (change)="updateCalender(element)">
+                            </mat-slide-toggle>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="3">
+                            No data matching the filter
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator #paginator [length]="tableCount" [pageSize]="pageSize" [pageSizeOptions]="[12, 24, 36]"
+                showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

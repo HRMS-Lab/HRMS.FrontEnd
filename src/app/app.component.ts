@@ -7,18 +7,33 @@ import { FooterComponent } from './common/footer/footer.component';
 import { CustomizerSettingsComponent } from './customizer-settings/customizer-settings.component';
 import { CustomizerSettingsService } from './customizer-settings/customizer-settings.service';
 import { ToggleService } from './common/sidebar/toggle.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './core/interceptor/error.interceptor';
+import { LoaderComponent } from './shared/component/loader/loader.component';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, CommonModule, SidebarComponent, HeaderComponent, FooterComponent, CustomizerSettingsComponent, NgClass],
+    imports: [
+        RouterOutlet,
+        CommonModule,
+        SidebarComponent,
+        HeaderComponent,
+        FooterComponent,
+        CustomizerSettingsComponent,
+        LoaderComponent,
+        NgClass,
+    ],
+    // providers: [
+    //     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    // ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
 export class AppComponent {
 
     // Title
-    title = 'Daxa - Angular 18 Material Design Admin Dashboard Template';
+    title = 'hrbot';
 
     // isSidebarToggled
     isSidebarToggled = false;

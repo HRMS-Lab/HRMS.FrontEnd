@@ -2,6 +2,7 @@ export interface EmployeeInfo {
     employeeId: number;
     employeeCode: string;
     fullName: string;
+    gender: string;
     email: string;
     phone: number;
     nationalId: number;
@@ -30,6 +31,7 @@ export interface EmployeeInfo {
     titleName: string;
 }
 export interface EmployeeInfoPayload {
+    employeeId: number,
     fullName: string;
     email: string;
     phone: number;

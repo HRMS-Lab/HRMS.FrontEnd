@@ -1,0 +1,257 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Attendance</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="material-symbols-outlined">
+                    business_center
+                </i>
+                Workforce Management
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Attendance</li>
+    </ol>
+</div>
+<mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-content>
+        <form [formGroup]="AttendanceForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <!-- Project Dropdown -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Project</label>
+                        <mat-form-field>
+                            <mat-label>Project</mat-label>
+                            <mat-select placeholder="Select Project" [(ngModel)]="selectedProject"
+                                [ngModelOptions]="{standalone: true}" name="selectedProject"
+                                (selectionChange)="getEmployees()">
+                                <mat-option *ngFor="let project of projects" [value]="project.projectId">
+                                    {{project.projectName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Employee Dropdown -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Employee</label>
+                        <mat-form-field>
+                            <mat-label>Employee</mat-label>
+                            <input matInput [matAutocomplete]="auto" formControlName="employeeId">
+                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                                (optionSelected)="getEmployeeAttendance(true, $event)">
+                                <mat-option *ngFor="let employee of filteredEmployees | async" [value]="employee">
+                                    {{ employee.fullName }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <button mat-icon-button type="button" class="remove-select" style="right: -12px;"
+                                *ngIf="AttendanceForm.value.employeeId" (click)="clearSelection('employeeId')">
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                            <mat-error>
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Attendance type Dropdown -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Attendance type</label>
+                        <mat-form-field>
+                            <mat-label>Attendance type</mat-label>
+                            <mat-select placeholder="Select Attendance type" formControlName="attendenceTypeId"
+                                required>
+                                <mat-option *ngFor="let type of attendanceTypes" [value]="type.attendanceTypeId">
+                                    {{ type.typeName }}
+                                </mat-option>
+                            </mat-select>
+                            <button mat-icon-button type="button" class="remove-select"
+                                *ngIf="AttendanceForm.value.attendenceTypeId" (click)="clearSelection('attendenceTypeId')">
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                            <mat-error *ngIf="AttendanceForm?.get('attendenceTypeId')?.hasError('required')">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Attendance Date -->
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="attendanceDateType"
+                    [ngModelOptions]="{standalone: true}" class="row">
+                    <div class="col-md-4 col-12">
+                        <mat-radio-button value="single">Single Attendance date</mat-radio-button>
+                        <div class="mb-25">
+                            <mat-form-field>
+                                <mat-label>Single Attendance date</mat-label>
+                                <input matInput name="singleAttendanceDate" [matDatepicker]="attendancePicker"
+                                    [disabled]="attendanceDateType != 'single'" [(ngModel)]="singleAttendanceDate"
+                                    [ngModelOptions]="{standalone: true}">
+                                <mat-datepicker-toggle matIconSuffix [for]="attendancePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #attendancePicker></mat-datepicker>
+                            </mat-form-field>
+                            <mat-error *ngIf="singleDateErrorMsg">
+                                This field is required
+                            </mat-error>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <mat-radio-button value="multi">Multi Attendance date</mat-radio-button>
+                        <mat-form-field>
+                            <mat-label>Multi Attendance date</mat-label>
+                            <mat-date-range-input [rangePicker]="addAttendancePicker" [comparisonStart]="addFromDate"
+                                [comparisonEnd]="addToDate">
+                                <input matStartDate placeholder="From date" [(ngModel)]="addFromDate"
+                                    [ngModelOptions]="{standalone: true}" name="addFromDate" [max]="tomorrow"
+                                    [disabled]="attendanceDateType != 'multi'">
+                                <input matEndDate placeholder="To date" [(ngModel)]="addToDate"
+                                    [ngModelOptions]="{standalone: true}" name="addToDate" [max]="tomorrow"
+                                    [disabled]="attendanceDateType != 'multi'">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matIconSuffix [for]="addAttendancePicker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #addAttendancePicker></mat-date-range-picker>
+                        </mat-form-field>
+                        <mat-error *ngIf="multiDateErrorMsg">
+                            This field is required
+                        </mat-error>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="col-md-4 col-12" style="align-content: end;">
+                        <div class="mb-25">
+                            <button mat-button mat-flat-button class="daxa"
+                                [disabled]="AttendanceForm.invalid && (singleAttendanceDate == undefined || (addFromDate == undefined && addToDate == undefined))"
+                                type="submit">
+                                Add Attendance
+                            </button>
+                        </div>
+                    </div>
+                </mat-radio-group>
+            </div>
+        </form>
+
+        <hr>
+
+        <div class="row" style="margin-bottom: 8px;">
+            <div class="col-md-4 col-12">
+                <mat-form-field>
+                    <mat-label>Search Attendance</mat-label>
+                    <mat-date-range-input [rangePicker]="attendanceSearchPicker" [comparisonStart]="fromDate"
+                        [comparisonEnd]="toDate">
+                        <input matStartDate placeholder="From date" [(ngModel)]="fromDate" name="fromDate"
+                            [max]="tomorrow" (ngModelChange)="search()">
+                        <input matEndDate placeholder="To date" [(ngModel)]="toDate" name="toDate" [max]="tomorrow"
+                            (ngModelChange)="search()">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="attendanceSearchPicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #attendanceSearchPicker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="products-list-table">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+                    <!-- Employee Code Column -->
+                    <ng-container matColumnDef="code">
+                        <th mat-header-cell *matHeaderCellDef>Code</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                <a class="d-block fw-medium">
+                                    {{ element?.employeeCode }}
+                                </a>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Employee Name Column -->
+                    <ng-container matColumnDef="fullName">
+                        <th mat-header-cell *matHeaderCellDef>Full Name</th>
+                        <td mat-cell *matCellDef="let element">
+                            <a class="d-block fw-medium">
+                                {{ element?.fullName }}
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <!-- Date Column -->
+                    <ng-container matColumnDef="dateCalender">
+                        <th mat-header-cell *matHeaderCellDef>Date</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                <a class="d-block fw-medium">
+                                    {{ element?.dateCalender | date: "dd-MM-yyyy" }}
+                                </a>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Attendance Type Column -->
+                    <ng-container matColumnDef="attendanceTypeName">
+                        <th mat-header-cell *matHeaderCellDef>Attendance Type</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                <a class="d-block fw-medium">
+                                    {{ element?.attendanceTypeName }}
+                                </a>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Check-in Column -->
+                    <ng-container matColumnDef="checkInTime">
+                        <th mat-header-cell *matHeaderCellDef>Check-In</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                <a class="d-block fw-medium">
+                                    {{ element?.checkInTime }}
+                                </a>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Check-out Column -->
+                    <ng-container matColumnDef="checkOutTime">
+                        <th mat-header-cell *matHeaderCellDef>Check-Out</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                <a class="d-block fw-medium">
+                                    {{ element?.checkOutTime }}
+                                </a>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="atten_Status">
+                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="info d-flex align-items-center">
+                                <span class="dot green-dot" *ngIf="element?.atten_Status !='Absent'"></span>
+                                <span class="dot red-dot" *ngIf="element?.atten_Status =='Absent'"></span>
+                                {{ element?.atten_Status }}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow style="text-align: center;">
+                        <td class="mat-cell" colspan="7">
+                            No data matching the filter
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <mat-paginator #paginator [length]="tableCount" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 30]"
+                showFirstLastButtons aria-label="Select page"></mat-paginator>
+        </div>
+
+    </mat-card-content>
+</mat-card>

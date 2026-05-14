@@ -10,12 +10,12 @@ import { EmployeeInfo, EmployeeInfoPayload, TitlesInfo } from '../models/employe
 export class EmployeeService {
     private readonly _http = inject(HttpClient);
 
-    loadEmployees() {
-        const req = this._http
-            .get<EmployeeInfo[]>(Endpoints.EMPLOYEES)
-            .pipe(take(1));
+    loadEmployees(pageNumber: number, pageSize: number, filter?: string) {
+        const url = `${Endpoints.EMPLOYEES}/${pageNumber}/${pageSize}${filter ? `/filter/${filter}` : ''}`;
+        
+        const req = this._http.get<EmployeeInfo[]>(url).pipe(take(1));
         return lastValueFrom(req);
-    }
+      }
     loadTitles() {
         const req = this._http
             .get<TitlesInfo[]>(Endpoints.TITLES)

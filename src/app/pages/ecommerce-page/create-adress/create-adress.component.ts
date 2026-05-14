@@ -121,7 +121,7 @@ export class CreateAdressComponent implements OnInit {
     }
     loadEmployees() {
         this.employeeService
-            .loadEmployees()
+            .loadEmployees(1, 10)
             .then((EmployeeInfo: any): any => {
                 console.log('in emlotesee', EmployeeInfo);
                 this.employees = EmployeeInfo?.data;
@@ -148,7 +148,7 @@ export class CreateAdressComponent implements OnInit {
                 this.addresses?.employeeId ?? null,
                 [Validators.required],
             ],
-            address1: [this.addresses?.address1 ?? '', [Validators.required]],
+            address: [this.addresses?.address ?? '', [Validators.required]],
             regionId: [this.addresses?.regionId ?? null],
             city: [this.addresses?.city ?? '', [Validators.required]],
             state: [this.addresses?.state ?? '', [Validators.required]],

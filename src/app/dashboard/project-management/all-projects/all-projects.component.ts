@@ -12,7 +12,7 @@ import { CustomizerSettingsService } from '../../../customizer-settings/customiz
 @Component({
     selector: 'app-all-projects',
     standalone: true,
-    imports: [MatCardModule, MatMenuModule, MatButtonModule, RouterLink, MatTableModule, MatPaginatorModule, NgIf, MatTooltipModule],
+    imports: [MatCardModule, MatMenuModule, MatButtonModule, MatTableModule, MatPaginatorModule, NgIf, MatTooltipModule],
     templateUrl: './all-projects.component.html',
     styleUrl: './all-projects.component.scss'
 })

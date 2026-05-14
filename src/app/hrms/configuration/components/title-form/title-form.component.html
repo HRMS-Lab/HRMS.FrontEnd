@@ -1,0 +1,129 @@
+<app-header-screen [title]="!editMode?'Create Title':'Update Title'" [icon]="'app_registration'"
+    [breadcrumb]="'Configuration'"></app-header-screen>
+
+<mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-content>
+        <form [formGroup]="Form" (ngSubmit)="onSubmit()" #submitForm="ngForm">
+            <div class="row">
+                <!-- Title Name -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Title Name</label>
+                        <mat-form-field>
+                            <mat-label>Title Name</mat-label>
+                            <input matInput placeholder="Title Name" formControlName="titleName" />
+                            <mat-error *ngIf="Form.get('titleName')?.hasError('required')">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Title Description -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Title Description</label>
+                        <mat-form-field>
+                            <mat-label>Title Description</mat-label>
+                            <input matInput placeholder="Title Description" formControlName="titleDescription" />
+                            <mat-error *ngIf="Form.get('titleDescription')?.hasError('required')">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Organization Chart -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Organization Chart</label>
+                        <mat-form-field>
+                            <mat-label>Organization Chart</mat-label>
+                            <mat-select name="selectedChart" formControlName="orgChartId">
+                                <mat-option *ngFor="let item of orgCharts" [value]="item.orgChartId">
+                                    {{ item.orgChartName }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="Form?.get('orgChartId')?.hasError('required') && submitted">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Reference 1 -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Reference 1</label>
+                        <mat-form-field>
+                            <mat-label>Reference 1</mat-label>
+                            <input matInput placeholder="Reference 1" formControlName="refrence1" />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Reference 2 -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Reference 2</label>
+                        <mat-form-field>
+                            <mat-label>Reference 2</mat-label>
+                            <input matInput placeholder="Reference 2" formControlName="refrence2" />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Reference 3 -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Reference 3</label>
+                        <mat-form-field>
+                            <mat-label>Reference 3</mat-label>
+                            <input matInput placeholder="Reference 3" formControlName="refrence3" />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Reference 4 -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Reference 4</label>
+                        <mat-form-field>
+                            <mat-label>Reference 4</mat-label>
+                            <input matInput placeholder="Reference 4" formControlName="refrence4" />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Reference 5 -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Reference 5</label>
+                        <mat-form-field>
+                            <mat-label>Reference 5</mat-label>
+                            <input matInput placeholder="Reference 5" formControlName="refrence5" />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Active -->
+                <div class="col-md-4 col-12 align-content-center">
+                    <div class="mb-25">
+                        <mat-checkbox class="example-margin" formControlName="active">
+                            Active
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-3 btn-box">
+                <button mat-button mat-flat-button class="daxa" type="submit" [disabled]="Form.invalid">
+                    {{ !editMode ? "Create":"Update" }} Title
+                </button>
+                <button mat-button mat-flat-button color="warn" type="button" class="ml-2" *ngIf="editMode"
+                    [routerLink]="['/hrms/configuration/title-form']">Cancel</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,28 @@
+::ng-deep{
+    mat-form-field {
+        position: relative;
+      }
+      
+      button.mat-icon-button {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        z-index: 1;
+      }
+      .remove-select{
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        z-index: 1;
+      }
+}
+
+.remove-select{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    z-index: 1;
+  }

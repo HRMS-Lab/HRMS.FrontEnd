@@ -1,0 +1,149 @@
+<div *ngIf="!createEmployeeForm" class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">{{(!editMode)?'Create':'Update'}} Attachment</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="material-symbols-outlined">
+                    group
+                </i>
+                Employee Management
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Employees</li>
+        <li class="breadcrumb-item position-relative">{{(!editMode)?'Create':'Update'}} Attachment</li>
+    </ol>
+</div>
+
+<mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block"
+    [class.rtl-enabled]="themeService.isRTLEnabled()">
+    <mat-card-content>
+        <form [formGroup]="AttachmentForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <!-- Employee Dropdown -->
+                <div class="col-md-6 col-12" *ngIf="!createEmployeeForm">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Employee</label>
+                        <mat-form-field>
+                            <mat-label>Employee</mat-label>
+                            <input matInput name="empName" [disabled]="true" placeholder="Employee Name"
+                                [(ngModel)]="employee.name" [ngModelOptions]="{standalone: true}" />
+                            <mat-error *ngIf="
+                                    AttachmentForm?.get('employeeId')?.hasError(
+                                        'required'
+                                    )
+                                ">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Attachment Type Dropdown -->
+                <div class="col-md-6 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Attachment Type</label>
+                        <mat-form-field>
+                            <mat-label>Attachment Type</mat-label>
+                            <mat-select placeholder="Select Attachment Type" formControlName="attachTypeID" required>
+                                <mat-option *ngFor="let type of attechmentsTypes" [value]="type.attachId">
+                                    {{ type.attachName }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="
+                                    AttachmentForm?.get('attachTypeID')?.hasError(
+                                        'required'
+                                    )
+                                ">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Files upload -->
+                <div class="col-12">
+                    <div class="mb-25">
+                        <file-upload [control]="fileUploadControl" class="file-uploader"></file-upload>
+                    </div>
+                </div>
+
+                <!-- refrences -->
+                <div class="col-md-6 col-12" *ngFor="let ref of refrenceCount; index as i">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">refrence {{i+1}}</label>
+                        <mat-form-field>
+                            <mat-label>refrence 1</mat-label>
+                            <input matInput placeholder="refrence {{i+1}}" formControlName="refrence{{i+1}}" />
+                            <mat-error *ngIf="
+                                    AttachmentForm?.get('refrence{{i+1}}')?.hasError(
+                                        'required'
+                                    )
+                                ">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-3 btn-box">
+                <button mat-button mat-flat-button *ngIf="createEmployeeForm" type="button"
+                    (click)="formEmployeePreviousFn()">Back</button>
+                <span class="space-button" *ngIf="createEmployeeForm"></span>
+                <button mat-button mat-flat-button class="daxa" type="submit" [disabled]="AttachmentForm.invalid || fileUploadControl.value.length == 0">
+                    {{ editMode ? "Update Attachment" : "Add Attachment" }}
+                </button>
+                <span class="space-button"></span>
+                <button mat-button mat-flat-button color="warn" *ngIf="!createEmployeeForm"
+                    [routerLink]="['/hrms/employee-management/employees']">
+                    Cancel
+                </button>
+                <button mat-button mat-flat-button color="primary" type="button" *ngIf="createEmployeeForm"
+                    (click)="formEmployeeNextFn()">Next</button>
+
+                <!-- Error Message -->
+                <mat-error *ngIf="attchErrMsg">{{ attchErrMsg }}</mat-error>
+            </div>
+        </form>
+
+        <hr *ngIf="employeeAttachments.length > 0">
+
+        <div class="image-gallery">
+            <div class="image-item" *ngFor="let attachment of employeeAttachments">
+                <img [src]="attachment.attachmentPath" [alt]="" class="image-src" />
+
+                <button type="button" mat-button class="card-header-menu-btn p-0" [matMenuTriggerFor]="cardHeaderMenu">
+                    <i class="material-symbols-outlined">
+                        more_horiz
+                    </i>
+                </button>
+                <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                    <button mat-menu-item (click)="openModal(attachment.attachmentPath)">
+                        <mat-icon>visibility</mat-icon>
+                        View
+                    </button>
+                    <button mat-menu-item (click)="deleteAttachment(attachment.attachmentId)">
+                        <mat-icon>delete</mat-icon>
+                        Delete
+                    </button>
+                </mat-menu>
+                <div class="image-type">{{attachment.attachTypeID| getItemName
+                    :attechmentsTypes:'attachId':'attachName'
+                    }}</div> <!-- Display Image Type -->
+            </div>
+
+        </div>
+
+        <!-- View image Modal Popup -->
+        <div *ngIf="showModal" class="modal" (click)="closeModal()">
+            <div class="modal-content" (click)="$event.stopPropagation()">
+                <span class="close-btn" (click)="closeModal()">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span></span> <!-- Close X -->
+                <img [src]="imageUrl" alt="Popup Image" />
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

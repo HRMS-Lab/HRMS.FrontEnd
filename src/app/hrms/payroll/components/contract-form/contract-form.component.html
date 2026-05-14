@@ -1,0 +1,214 @@
+<div class="breadcrumb-card mb-25 d-md-flex align-items-center justify-content-between">
+    <h5 class="mb-0">Contract Form</h5>
+    <ol class="breadcrumb list-unstyled mt-0 mb-0 pl-0">
+        <li class="breadcrumb-item position-relative">
+            <a routerLink="/" class="d-inline-block position-relative">
+                <i class="material-symbols-outlined">
+                    payments
+                </i>
+                Payroll
+            </a>
+        </li>
+        <li class="breadcrumb-item position-relative">Contract-Form</li>
+    </ol>
+</div>
+
+<mat-card class="daxa-card create-product-card mb-25 border-radius bg-white border-none d-block">
+    <mat-card-content>
+        <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <!-- Project -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Project</label>
+                        <mat-form-field>
+                            <mat-label>Project</mat-label>
+                            <mat-select name="selectedProject" [(ngModel)]="selectedProject"
+                                [ngModelOptions]="{standalone: true}" (selectionChange)="getEmployeesProject($event)">
+                                <mat-option *ngFor="let item of projects" [value]="item.projectId">
+                                    {{ item.projectName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Employees -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Employee</label>
+                        <mat-form-field>
+                            <mat-label>Employee</mat-label>
+                            <mat-select name="selectedEmployee" formControlName="employeeID">
+                                <mat-option *ngFor="let item of employeeProjectList" [value]="item.employeeId">
+                                    {{ item.fullName }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="Form?.get('employeeID')?.hasError('required') && submitted">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Templates -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Template</label>
+                        <mat-form-field>
+                            <mat-label>Template</mat-label>
+                            <mat-select name="selectedTemplate" formControlName="payTempHeadID"
+                                (selectionChange)="getTemplateInfo($event)">
+                                <mat-option *ngFor="let item of templates" [value]="item.payTempHeadId">
+                                    {{ item.templateName }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="Form?.get('payTempHeadID')?.hasError('required') && submitted">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Description</label>
+                        <mat-form-field>
+                            <mat-label>Description</mat-label>
+                            <input matInput placeholder="Description" formControlName="descrption" />
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- Start date -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">Start date</label>
+                        <mat-form-field>
+                            <mat-label>Start date</mat-label>
+                            <input matInput name="startDate" [matDatepicker]="startDate" formControlName="startDate"
+                                placeholder="Start date">
+                            <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
+                            <mat-datepicker #startDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <!-- End date -->
+                <div class="col-md-4 col-12">
+                    <div class="mb-25">
+                        <label class="main-label d-block lh-1 text-black">End date</label>
+                        <mat-form-field>
+                            <mat-label>End date</mat-label>
+                            <input matInput name="singleAttendanceDate" [matDatepicker]="endDate"
+                                formControlName="endDate" placeholder="End date">
+                            <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
+                            <mat-datepicker #endDate></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Deduction table -->
+                    <div class="products-list-table mb-1">
+                        <div class="table-responsive">
+                            <table mat-table [dataSource]="deductionDataSource">
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef>Deduction Name</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="info d-flex align-items-center">
+                                            {{ element?.payTempLinesID | getItemName:
+                                            deductions:'payDeductId':'deductionName' }}
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Amount Column -->
+                                <ng-container matColumnDef="amount">
+                                    <th mat-header-cell *matHeaderCellDef>Deduction Amount</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="info d-flex align-items-center">
+                                            <mat-form-field>
+                                                <mat-label>Amount</mat-label>
+                                                <input matInput name="deduct_amount_{{element.payTempLinesID}}"
+                                                    [(ngModel)]="element.amountTemp"
+                                                    [ngModelOptions]="{standalone: true}" placeholder="Amount" />
+                                            </mat-form-field>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                                <!-- Row shown when there is no matching data. -->
+                                <tr class="mat-row" *matNoDataRow>
+                                    <td class="mat-cell text-center" colspan="2">
+                                        No Deductions
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <!-- Earning table -->
+                    <div class="products-list-table">
+                        <div class="table-responsive">
+                            <table mat-table [dataSource]="earningDataSource">
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef>Earning Name</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="info d-flex align-items-center">
+                                            {{ element?.payTempLinesID | getItemName:
+                                            earnings:'payEarningId':'earningName' }}
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Amount Column -->
+                                <ng-container matColumnDef="amount">
+                                    <th mat-header-cell *matHeaderCellDef>Earning Amount</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="info d-flex align-items-center">
+                                            <mat-form-field>
+                                                <mat-label>Amount</mat-label>
+                                                <input matInput name="earning_amount_{{element.payTempLinesID}}"
+                                                    [(ngModel)]="element.amountTemp"
+                                                    [ngModelOptions]="{standalone: true}" placeholder="Amount" />
+                                            </mat-form-field>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+                                <!-- Row shown when there is no matching data. -->
+                                <tr class="mat-row" *matNoDataRow>
+                                    <td class="mat-cell text-center" colspan="2">
+                                        No Earnings
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-3 btn-box">
+                <button mat-button mat-flat-button class="daxa" type="submit" [disabled]="Form.invalid">
+                    Create
+                </button>
+
+            </div>
+        </form>
+
+    </mat-card-content>
+</mat-card>

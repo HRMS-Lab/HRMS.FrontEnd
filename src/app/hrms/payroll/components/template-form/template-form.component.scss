@@ -1,0 +1,49 @@
+::ng-deep{
+    .coupon-code {
+        padding-right: 125px;
+
+        .mat-mdc-form-field {
+            height: 50px;
+            background-color: #f4f6fc;
+
+            .mat-mdc-text-field-wrapper {
+                border: 0;
+            }
+            .mat-mdc-text-field-wrapper {
+                .mat-mdc-form-field-flex {
+                    .mat-mdc-floating-label {
+                        top: 24px;
+                    }
+                }
+                &:not(.mdc-text-field--outlined) {
+                    .mat-mdc-form-field-infix {
+                        padding-top: 22px;
+                    }
+                }
+            }
+        }
+        .mat-mdc-button {
+            right: 0;
+            top: 50%;
+            border: 0;
+            height: auto;
+            min-width: auto;
+            min-height: auto;
+            padding: 14px 35px;
+            position: absolute;
+            font-weight: normal;
+            color: var(--whiteColor);
+            transform: translateY(-50%);
+            background-color: var(--daxaColor);
+        }
+    }
+    
+    .template-header-drop-table{
+        padding-bottom: 5px !important;
+        padding-top: 5px !important;
+    }
+    .template-header-table{
+        padding-bottom: 0px !important;
+        padding-top: 0px !important;
+    }
+}

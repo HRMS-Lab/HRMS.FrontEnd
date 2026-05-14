@@ -22,7 +22,7 @@ export interface DistrictInfoDetails {
     districtId: number;
     regionId: number;
     districtName: string;
-    districtDesciption: string;
+    districtDescription: string;
     lat: string;
     long: string;
     refrence1: string;

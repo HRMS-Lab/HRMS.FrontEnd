@@ -27,11 +27,11 @@ export class LoaderService {
     );
   }
 
-  private turnLoadingOn() {
+  turnLoadingOn() {
     this._loadingSubject$.next(true);
   }
 
-  private turnLoadingOff() {
+  turnLoadingOff() {
     this._loadingSubject$.next(false);
   }
 }
